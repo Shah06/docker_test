@@ -1,15 +1,37 @@
 'use strict';
 
-const express = require('express');
-
 // Constants
+const express = require('express');
+const mysql = require('mysql');
 const PORT = 8080;
-const HOST = '0.0.0.0';
+const HOST = 'node_app';
+
+const SQL_HOST = 'mysql';
+const SQL_USER = 'root';
+const SQL_PORT = '3306';
+const SQL_PASSWD = 'password';
+
+let isSqlConnected = false;
+
+const con = mysql.createConnection({
+	host: SQL_HOST,
+	user: SQL_USER,
+	password: SQL_PASSWD
+});
+
+con.connect(function(err) {
+	if (err) {
+		console.log(err);
+		isSqlConnected = false;
+	}
+	console.log("Connected to mysql");
+	isSqlConnected = true;
+});
 
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('Hello World');
+ 	res.send('Current server time: ' + new Date() + '\nConnected to MySQL: ' + isSqlConnected);
 });
 
 app.listen(PORT, HOST);
