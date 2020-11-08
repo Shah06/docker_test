@@ -23,9 +23,10 @@ con.connect(function(err) {
 	if (err) {
 		console.log(err);
 		isSqlConnected = false;
+	} else {
+		isSqlConnected = true;
+		console.log("Connected to mysql");
 	}
-	console.log("Connected to mysql");
-	isSqlConnected = true;
 });
 
 // App
