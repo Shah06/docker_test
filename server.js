@@ -20,13 +20,14 @@ const con = mysql.createConnection({
 });
 
 con.connect(function(err) {
-	if (err) {
+	
+	while (err) {
 		console.log(err);
 		isSqlConnected = false;
-	} else {
-		isSqlConnected = true;
-		console.log("Connected to mysql");
 	}
+	isSqlConnected = true;
+	console.log("Connected to mysql");
+
 });
 
 // App

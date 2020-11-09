@@ -1,0 +1,17 @@
+# If NodeJS can't connect to MySQL (isn't auth)
+
+Using docker-compose, if you link a volume, the parameters
+
+   environment:
+      MYSQL_ROOT_PASSWORD: 'pass'
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'pass'
+in your docker-compose.yml will not be used, so default user will not be created: you have to create it manually or remove the volume declaration.
+
+This is not quite accurate. They will be used if the database files do not exist in the folder. If it is a folder from a previous run of mysql, either from another container or an install from the host machine (ensure neither is running), then the initialization step will be skipped and these environment variables have no effect.
+
+If there is no important data in the files, you can always docker-compose rm -fv; sudo rm -rf ~/dev/dbs-data/mysql/* and then docker-compose up -d.
+
+
+
