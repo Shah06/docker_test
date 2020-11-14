@@ -11,6 +11,7 @@ const SQL_HOST = 'mysql';
 const SQL_USER = 'root';
 const SQL_PORT = '3306';
 const SQL_PASSWD = 'password';
+const SQL_DB = 'db';
 let isSqlConn = false;
 
 const WEATHER_KEY = '97fa8fdde798392409ad1b20091e89fe';
@@ -36,6 +37,9 @@ function persistConnect() {
 			} else {
 				isSqlConn = true;
 				console.log("Connected to mysql");
+
+				// TODO load file that creates and sets up DB
+
 			}
 		
 		});
@@ -54,8 +58,8 @@ axios.get(apiPath).then(res => {
 	// always run
 });
 
-// Attempt a DB connection every 1.5 second
-setInterval(persistConnect, 1500);
+// Attempt a DB connection every 3 seconds
+setInterval(persistConnect, 3000);
 
 
 // update La Jolla weather every 30 seconds
@@ -71,6 +75,14 @@ app.get('/', (req, res) => {
 app.get('/weather', (req, res) => {
 	console.log('sending weather data');
 	res.send(weatherData);
+});
+
+app.post('/createuser', (req, res) => {
+	res.send('Post request sent to /createuser');
+});
+
+app.post('/login', (req, res) => {
+	res.send(`Post request sent to /login. ${JSON.stringify(req.headers)}`);
 });
 
 app.listen(PORT, HOST);
